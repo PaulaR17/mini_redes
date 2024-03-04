@@ -15,13 +15,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if (enemyPrefab != null)
-        {
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        }
-        else
-        {
-            Debug.LogWarning("Enemy prefab no asignado. Por favor, asigna un prefab de enemigo en el inspector.");
-        }
+        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+       
     }
 }

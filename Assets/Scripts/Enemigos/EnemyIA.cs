@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyIA : MonoBehaviour
 {
@@ -12,10 +13,6 @@ public class EnemyIA : MonoBehaviour
 
     private void Update()
     {
-        if (playerTransform != null)
-        {
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
-        }
+        GetComponent<NavMeshAgent>().destination=playerTransform.position;
     }
 }

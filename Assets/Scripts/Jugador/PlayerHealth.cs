@@ -5,9 +5,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public HealthBar healthBar; // Referencia a tu barra de vida en la UI
+    public HealthBar healthBar; 
 
-    // Inicializar la salud del jugador
     void Start()
     {
         currentHealth = maxHealth;
