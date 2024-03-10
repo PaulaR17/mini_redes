@@ -5,24 +5,49 @@ using UnityEngine.Rendering.Universal;
 
 public class MovementStateManager : MonoBehaviour
 {
-    public float moveSpeed = 3;
+    public float currentMoveSpeed;
+    public float walkSpeed=3, walkBackSpeed=2;
+    public float runSpeed=7, runBackSpeed = 5;
+    public float crouchSpeed=2, crouchBackSpeed = 1;
     [HideInInspector] public Vector3 dir;
-    float hzInput, vInput;
+    [HideInInspector] public float hzInput, vInput;
     CharacterController controller;
     [SerializeField] float groundYOffset;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float gravity = -9.81f;
     Vector3 velocity;
     Vector3 spherePos;
+
+    MovementBaseState currentState;
+    public IdleState Idle = new IdleState();
+    public WalkState Walk = new WalkState();
+    public CrouchState Crouch = new CrouchState();
+    public RunState Run = new RunState();
+
+    [HideInInspector] public Animator anim;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        SwitchState(Idle);
     }
 
     void Update()
     {
         GetDirectionAndMove();
         Gravity();
+
+        currentState.UpdateState(this);
+
+        anim.SetFloat("hzInput", hzInput);
+        anim.SetFloat("vInput", vInput);
+    }
+
+    public void SwitchState (MovementBaseState state)
+    {
+        currentState = state;
+        currentState.EnterState(this);
     }
 
     void GetDirectionAndMove()
@@ -31,7 +56,7 @@ public class MovementStateManager : MonoBehaviour
         vInput = Input.GetAxis("Vertical");
 
         dir = transform.forward * vInput+transform.right * hzInput;
-        controller.Move(dir * moveSpeed * Time.deltaTime);
+        controller.Move(dir.normalized * currentMoveSpeed * Time.deltaTime);
     }
 
     bool IsGrounded()
