@@ -21,7 +21,8 @@ public class ExplodeOnContact : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
             }
-            Destroy(gameObject);
+
+            Destroy(this);
         }
     }
 }
