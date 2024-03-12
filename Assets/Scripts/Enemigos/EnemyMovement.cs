@@ -8,6 +8,10 @@ public class EnemyMovement : MonoBehaviour
     public float speed = 5f;
     public float rotationSpeed = 5f;
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
     void Update()
     {
         // Mueve el enemigo hacia el jugador
