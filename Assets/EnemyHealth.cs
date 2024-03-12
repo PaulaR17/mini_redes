@@ -22,7 +22,8 @@ public class EnemyHealth : MonoBehaviour
     void EnemyDeath()
     {
         explosionEffect.SetActive(true);
-        Instantiate(explosionEffect, transform.position, Quaternion.identity); 
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        
         Destroy(gameObject);
         Debug.Log("Moritomuertomoritssimo");
     }
