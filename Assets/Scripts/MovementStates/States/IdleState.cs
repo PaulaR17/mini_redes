@@ -16,6 +16,12 @@ public class IdleState : MovementBaseState
             if(Input.GetKey(KeyCode.LeftShift)) movement.SwitchState(movement.Run);
             else movement.SwitchState(movement.Walk);
         }
-        if (Input.GetKey(KeyCode.C)) movement.SwitchState(movement.Crouch);
+        if (Input.GetKeyDown(KeyCode.C)) movement.SwitchState(movement.Crouch);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            movement.previousState = this;
+            movement.SwitchState(movement.Jump);
+        }
     }
 }
