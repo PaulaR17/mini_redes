@@ -1,19 +1,22 @@
 using UnityEngine;
-using UnityEngine.UI; // Necesario para trabajar con la UI
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
-    public HealthBar healthBar; 
+    public HealthBar healthBar;
+
 
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+
     }
 
-    // Método para recibir daño
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -21,9 +24,15 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Debug.Log("Jugador ha muerto.");
+            ReloadLevel();
         }
     }
+
+    void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
 
     public void Heal(int amount)
     {

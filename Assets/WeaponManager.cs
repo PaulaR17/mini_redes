@@ -17,8 +17,9 @@ public class WeaponManager : MonoBehaviour
     AimStateManager aim;
     public float damage = 20;
 
-    [SerializeField] AudioClip gunshot;
-    [HideInInspector]public AudioSource audioSource;
+    [SerializeField] public AudioClip gunShot;
+    [HideInInspector] public AudioSource audioSource;
+
     [HideInInspector]public WeaponAmmo ammo;
     WeaponBloom bloom;
     ActionStateManager actions;
@@ -33,7 +34,9 @@ public class WeaponManager : MonoBehaviour
     WeaponClassManager weaponClass;
     void Start()
     {
-       
+
+        audioSource = GetComponent<AudioSource>();
+
         aim = GetComponentInParent<AimStateManager>();
         fireRateTimer = fireRate;
         bloom = GetComponentInParent<WeaponBloom>();
@@ -50,7 +53,6 @@ public class WeaponManager : MonoBehaviour
         {
             weaponClass = GetComponentInParent<WeaponClassManager>();
             ammo = GetComponent<WeaponAmmo>();
-            audioSource = GetComponent<AudioSource>();
             recoil = GetComponent<WeaponRecoil>();
             recoil.recoilFollowPos = weaponClass.recoilFollowPos;
         }
@@ -77,12 +79,12 @@ public class WeaponManager : MonoBehaviour
 
     void Fire()
     {
+        //audioSource.PlayOneShot(gunShot);
+
         fireRateTimer = 0;
         barrelPos.LookAt(aim.aimPos);
         barrelPos.localEulerAngles = bloom.BloomAngle(barrelPos);
-        //audioSource.PlayOneShot(gunshot);
         recoil.TriggerRecoil();
-        //TriggerMuzzleFlash();
         ammo.currentAmmo--;
         for(int i = 0; i < bulletsPerShot; i++)
         {

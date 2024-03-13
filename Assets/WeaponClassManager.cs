@@ -10,7 +10,7 @@ public class WeaponClassManager : MonoBehaviour
     ActionStateManager actions;
 
     public WeaponManager[] weapons;
-    int currentWeaponIndex;
+    public int currentWeaponIndex;
 
     private void Awake()
     {

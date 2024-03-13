@@ -10,7 +10,7 @@ public class TimerController : MonoBehaviour
     public float openPositionY; // La posición Y a la que la puerta debe moverse para "abrirse"
     public float doorOpenSpeed = 3f; // Velocidad a la que la puerta se abrirá
     public float startTime = 60f; // Tiempo inicial en segundos
-
+    public PlayerHealth playerHealth;
     private float timeRemaining;
     private bool timerIsRunning = false;
     private bool doorIsOpening = false;
@@ -47,6 +47,12 @@ public class TimerController : MonoBehaviour
                 timerIsRunning = false;
                 timerText.gameObject.SetActive(false); // Oculta el temporizador cuando termine
                 runToDoorText.gameObject.SetActive(false); // Asegúrate de ocultar también este texto
+
+                // Aquí es donde establecemos la salud del jugador a 0.
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(playerHealth.currentHealth);
+                }
             }
         }
     }

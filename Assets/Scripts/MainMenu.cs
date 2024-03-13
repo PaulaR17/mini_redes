@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     {
       Application.Quit();
     }
-        
-   
+    public void IrAlMenu(string NombreMenu)
+    {
+        SceneManager.LoadScene(NombreMenu);
+    }
+
+
 }
