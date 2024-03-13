@@ -18,8 +18,8 @@ public class WeaponManager : MonoBehaviour
     public float damage = 20;
 
     [SerializeField] AudioClip gunshot;
-    AudioSource audioSource;
-    WeaponAmmo ammo;
+    [HideInInspector]public AudioSource audioSource;
+    [HideInInspector]public WeaponAmmo ammo;
     WeaponBloom bloom;
     ActionStateManager actions;
     WeaponRecoil recoil;
@@ -28,13 +28,14 @@ public class WeaponManager : MonoBehaviour
     ParticleSystem muzzleFlashParticles;
     float lightIntensity;
     [SerializeField] float lightReturnSpeed = 20;
+
+    public Transform leftHandTarget, leftHandHint;
+    WeaponClassManager weaponClass;
     void Start()
     {
-        recoil=GetComponent<WeaponRecoil>();
-        //audioSource.GetComponent<AudioSource>();
+       
         aim = GetComponentInParent<AimStateManager>();
         fireRateTimer = fireRate;
-        ammo= GetComponentInParent<WeaponAmmo>();
         bloom = GetComponentInParent<WeaponBloom>();
         actions = GetComponentInParent<ActionStateManager>();
         muzzleFlashLight = GetComponentInChildren<Light>();
@@ -43,7 +44,19 @@ public class WeaponManager : MonoBehaviour
         muzzleFlashLight.intensity = 0;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        if (weaponClass == null)
+        {
+            weaponClass = GetComponentInParent<WeaponClassManager>();
+            ammo = GetComponent<WeaponAmmo>();
+            audioSource = GetComponent<AudioSource>();
+            recoil = GetComponent<WeaponRecoil>();
+            recoil.recoilFollowPos = weaponClass.recoilFollowPos;
+        }
+        weaponClass.SetCurrentWeapon(this);
+    }
+
     void Update()
     {
         if (ShouldFire()) Fire();
@@ -56,6 +69,7 @@ public class WeaponManager : MonoBehaviour
         if (fireRateTimer < fireRate) return false;
         if (ammo.currentAmmo == 0) return false;
         if (actions.currentstate == actions.Reload) return false;
+        if (actions.currentstate == actions.Swap) return false;
         if (semiAuto&& Input.GetKeyDown(KeyCode.Mouse0)) return true;
         if (!semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         return false;

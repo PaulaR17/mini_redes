@@ -1,36 +1,48 @@
 using UnityEngine;
-using System.Collections; // Asegúrate de incluir este namespace para usar corrutinas
-using UnityEngine.UI; // Necesita este namespace para trabajar con elementos de UI
+using TMPro; // Importa el namespace de TextMeshPro
 
 public class InteractionScript : MonoBehaviour
 {
-    public GameObject objectToAnimate; // El objeto que quieres mover
-    public Vector3 targetPosition; // La posición a la que quieres mover el objeto
-    public float speed = 1f; // La velocidad de la animación
-    public GameObject interactionIndicator; // El elemento de UI que indica que puedes interactuar
-    private bool isPlayerNear = false;
-    private bool hasBeenActivated = false; // Controla si el botón ya ha sido activado
-    public GameObject[] enemyPrefabs; // Prefabs de los enemigos a instanciar
-    public Transform[] enemySpawnPoints; // Puntos donde los enemigos aparecerán
+    public TMP_Text interactionText_Timer; // El texto que aparece para indicar la interacción
+    public TimerController timerController;
+    public TMP_Text interactionText; // Cambia a usar TMP_Text en lugar de Text
+    public WaveSpawner waveSpawner;
 
-    void Update()
+    private bool isPlayerNear = false;
+    private bool hasBeenActivated = false;
+
+    private void Start()
     {
-        // Chequea si el jugador está cerca, ha presionado la tecla E, y el botón no ha sido activado aún
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !hasBeenActivated)
+        if (interactionText != null)
         {
-            StartCoroutine(MoveObject(objectToAnimate, targetPosition, speed));
-            SpawnEnemies();
-            hasBeenActivated = true; // Asegura que no se pueda activar nuevamente
-            interactionIndicator.SetActive(false); // Oculta el indicador de interacción una vez activado
+            interactionText.gameObject.SetActive(false); // Asegúrate de que el texto no se muestra al inicio
+        }
+    }
+
+    private void Update()
+    {
+        if (isPlayerNear && !hasBeenActivated && Input.GetKeyDown(KeyCode.E))
+        {
+            hasBeenActivated = true;
+            if (interactionText != null)
+            {
+                interactionText_Timer.gameObject.SetActive(false); // Oculta el texto de interacción
+                timerController.StartTimer();
+                interactionText.gameObject.SetActive(false); // Oculta el texto de interacción
+            }
+            waveSpawner.StartWaves(); // Inicia las oleadas y el temporizador en el otro script
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !hasBeenActivated) // Solo muestra el indicador si no ha sido activado
+        if (other.CompareTag("Player") && !hasBeenActivated)
         {
-            interactionIndicator.SetActive(true);
             isPlayerNear = true;
+            if (interactionText != null)
+            {
+                interactionText.gameObject.SetActive(true); // Muestra el texto de interacción
+            }
         }
     }
 
@@ -38,46 +50,10 @@ public class InteractionScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactionIndicator.SetActive(false);
             isPlayerNear = false;
-        }
-    }
-
-    IEnumerator MoveObject(GameObject obj, Vector3 target, float speed)
-    {
-        // Obtiene la posición inicial para mantener las coordenadas Y y Z constantes
-        float startX = obj.transform.position.x;
-        float targetX = target.x;
-        Vector3 newPosition = obj.transform.position;
-
-        // Calcula la distancia a recorrer
-        float distance = Mathf.Abs(targetX - startX);
-        if (distance == 0) yield break; // Si no hay distancia que recorrer, termina la corrutina
-
-        float currentTime = 0; // Tiempo transcurrido desde el inicio del movimiento
-        while (currentTime < distance / speed)
-        {
-            // Calcula la nueva posición X basada en la velocidad y el tiempo transcurrido
-            currentTime += Time.deltaTime;
-            float newX = Mathf.Lerp(startX, targetX, currentTime * speed / distance);
-            newPosition.x = newX; // Actualiza solo la componente X de la nueva posición
-            obj.transform.position = newPosition;
-
-            yield return null; // Espera hasta el próximo frame antes de continuar
-        }
-
-        // Asegura que la posición final es exactamente el objetivo en el eje X
-        newPosition.x = targetX;
-        obj.transform.position = newPosition;
-    }
-
-    void SpawnEnemies()
-    {
-        for (int i = 0; i < enemySpawnPoints.Length; i++)
-        {
-            if (i < enemyPrefabs.Length) // Asegura que no exceda el número de prefabs
+            if (!hasBeenActivated && interactionText != null)
             {
-                Instantiate(enemyPrefabs[i], enemySpawnPoints[i].position, enemySpawnPoints[i].rotation);
+                interactionText.gameObject.SetActive(false); // Oculta el texto si el jugador se aleja antes de activar el evento
             }
         }
     }

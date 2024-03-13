@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] float health;
     [SerializeField] GameObject explosionEffect;
+    public WaveSpawner waveSpawner;
 
     public void TakeDamage (float damage)
     {
@@ -26,6 +27,11 @@ public class EnemyHealth : MonoBehaviour
         
         Destroy(gameObject);
         Debug.Log("Moritomuertomoritssimo");
+
+        if (waveSpawner != null)
+        {
+            waveSpawner.EnemyDied(this.gameObject);
+        }
     }
 
 }
