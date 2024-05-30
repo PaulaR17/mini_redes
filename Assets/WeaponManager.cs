@@ -32,6 +32,8 @@ public class WeaponManager : MonoBehaviour
 
     public Transform leftHandTarget, leftHandHint;
     WeaponClassManager weaponClass;
+
+    public AudioClip gunshot; 
     void Start()
     {
 
@@ -79,8 +81,7 @@ public class WeaponManager : MonoBehaviour
 
     void Fire()
     {
-        //audioSource.PlayOneShot(gunShot);
-
+        SFXManager.instance.PlaySFXClip(gunShot, transform, 1, false);
         fireRateTimer = 0;
         barrelPos.LookAt(aim.aimPos);
         barrelPos.localEulerAngles = bloom.BloomAngle(barrelPos);

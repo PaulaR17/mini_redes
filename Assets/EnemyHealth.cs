@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] float health;
     [SerializeField] GameObject explosionEffect;
     public WaveSpawner waveSpawner;
+    public AudioClip explosionSound;
 
     public void TakeDamage (float damage)
     {
@@ -22,6 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     void EnemyDeath()
     {
+        SFXManager.instance.PlaySFXClip(explosionSound, transform, 1, false);
         explosionEffect.SetActive(true);
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
         

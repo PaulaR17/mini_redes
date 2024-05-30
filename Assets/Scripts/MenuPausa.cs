@@ -6,38 +6,62 @@ using UnityEngine.SceneManagement;
 public class MenuPausa : MonoBehaviour
 {
     public GameObject ObjetoMenuPausa;
-    public bool Pausa = false;
+    public AimStateManager aimStateManager; 
+
+    private bool Pausa = false;
+
     void Start()
     {
-        
+        ObjetoMenuPausa.SetActive(false);
+
+        if (aimStateManager == null)
+        {
+            aimStateManager = FindObjectOfType<AimStateManager>();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Pausa == false)
+            if (!Pausa)
             {
-                ObjetoMenuPausa.SetActive(true);
-                Pausa = true;
-
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Pausar();
             }
+            else
+            {
+                Resumir();
+            }
+        }
+    }
+
+    public void Pausar()
+    {
+        ObjetoMenuPausa.SetActive(true);
+        Pausa = true;
+        Time.timeScale = 0;
+
+        if (aimStateManager != null)
+        {
+            aimStateManager.enabled = false;
         }
     }
 
     public void Resumir()
     {
         ObjetoMenuPausa.SetActive(false);
-        Pausa=false;
+        Pausa = false;
         Time.timeScale = 1;
+
+        if (aimStateManager != null)
+        {
+            aimStateManager.enabled = true;
+        }
     }
 
     public void IrAlMenu(string NombreMenu)
     {
+        Time.timeScale = 1; 
         SceneManager.LoadScene(NombreMenu);
     }
 }

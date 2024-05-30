@@ -4,6 +4,7 @@ public class EnemyCollision : MonoBehaviour
 {
     [SerializeField] GameObject explosionEffect;
     [SerializeField] int explosionDamage = 20; 
+    public AudioClip explosionSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +17,7 @@ public class EnemyCollision : MonoBehaviour
 
     public void Explode()
     {
+        SFXManager.instance.PlaySFXClip(explosionSound, transform, 1, false);
         explosionEffect.SetActive(true);
         Instantiate(explosionEffect, transform.position, Quaternion.identity); 
         Destroy(gameObject); 

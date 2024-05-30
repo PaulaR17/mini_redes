@@ -283,7 +283,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 3682258631c60c441a21676cca7f43cc, type: 3}
+      m_Icon: {fileID: 2800000, guid: aa82d1daca889a04f81c9a6da1b89e3a, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -840,8 +840,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: MP
-  metroPackageVersion: 
+  metroPackageName: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -849,7 +849,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: MP
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: MiniProyecto
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

@@ -131,6 +131,7 @@ MonoBehaviour:
   health: 100
   explosionEffect: {fileID: 2613048908383523544}
   waveSpawner: {fileID: 0}
+  explosionSound: {fileID: 8300000, guid: 92e5284a2bbc77a41927d069b99c5b2d, type: 3}
 --- !u!114 &772666926417777034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 2613048908383523544}
   explosionDamage: 20
+  explosionSound: {fileID: 8300000, guid: 92e5284a2bbc77a41927d069b99c5b2d, type: 3}
 --- !u!136 &8740027082559701425
 CapsuleCollider:
   m_ObjectHideFlags: 0
