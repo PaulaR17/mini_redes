@@ -5098,6 +5098,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2695902367608447595, guid: b78340a618791d9409779822cdbaa1d1,
+        type: 3}
+      propertyPath: gunShot
+      value: 
+      objectReference: {fileID: 8300000, guid: 5b078d10766e3794eab963a52fe178d3, type: 3}
+    - target: {fileID: 2695902367608447595, guid: b78340a618791d9409779822cdbaa1d1,
+        type: 3}
+      propertyPath: gunshot
+      value: 
+      objectReference: {fileID: 8300000, guid: 5b078d10766e3794eab963a52fe178d3, type: 3}
+    - target: {fileID: 3339679561838303138, guid: b78340a618791d9409779822cdbaa1d1,
+        type: 3}
+      propertyPath: gunShot
+      value: 
+      objectReference: {fileID: 8300000, guid: fe9bfaaa2bd1c8e438d95328b451ac96, type: 3}
+    - target: {fileID: 3339679561838303138, guid: b78340a618791d9409779822cdbaa1d1,
+        type: 3}
+      propertyPath: gunshot
+      value: 
+      objectReference: {fileID: 8300000, guid: fe9bfaaa2bd1c8e438d95328b451ac96, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
